@@ -1,0 +1,10 @@
+#!/bin/bash
+
+root="$HOME/.obix"
+
+if [ -d "${root}/bin" ] && [[ ":$PATH:" != *":${root}/bin:"* ]]
+then
+    export PATH="${PATH}:${root}/bin"
+fi
+
+. "${root}/alias"

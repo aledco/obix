@@ -1,0 +1,5 @@
+#!/bin/bash
+
+alias exe='chmod u+x'
+alias clip='xclip -sel clip'
+alias git='gith'

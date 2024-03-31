@@ -1,0 +1,80 @@
+#!/bin/python3
+
+import os
+import argparse
+import subprocess as sp
+
+CONFIG = {
+    "apt_packages": [
+        "build-essential",
+        "python3",
+        "vim",
+        "xclip",
+        "zip",
+        "unzip",
+        "git",
+        "cargo"
+    ],
+    "config_files": [
+        ".vimrc"
+    ]
+}
+
+HOME_DIR = os.environ["HOME"]
+BASHRC = os.path.join(HOME_DIR, ".bashrc")
+OBIX_DIR = os.path.join(HOME_DIR, ".obix")
+
+def main():
+    args = parse_args()
+
+    if args.apt_install:
+        package_install(CONFIG["apt_packages"])
+
+    copy_configuration_files(CONFIG["config_files"])
+    setup_obix_dir()
+
+def shell(cmd):
+    sp.call(cmd, stdout=sp.DEVNULL) # stderr=obix.log
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        prog='install', 
+        description='Installs the obix toolkit to a unix system', 
+        epilog="Currently only supports Ubuntu")
+    
+    parser.add_argument(
+        "-a", 
+        "--apt-install", 
+        action="store_true", 
+        help="performs a full apt install of all packages registered in CONFIG")
+    
+    return parser.parse_args()
+
+def package_install(apt_packages):  
+    shell(["sudo", "apt-get", "update", "-y"])
+    shell(["sudo", "apt-get", "upgrade", "-y"])
+    shell(["sudo", "apt-get", "install"] + apt_packages + ["-y"])
+
+def copy_configuration_files(config_files):
+    for fname in config_files:
+        sp.call(["cp", os.path.join("con", fname), HOME_DIR])
+
+def setup_obix_dir():
+    shell(["rm", "-r", "-f", OBIX_DIR])
+    shell(["mkdir", OBIX_DIR])
+    shell(["cp", "-r", "bin", OBIX_DIR])
+    shell(["cp", "-r", "tpl", OBIX_DIR])
+    shell(["cp", "she/alias", OBIX_DIR])
+    shell(["cp", "she/env", OBIX_DIR])
+    shell(["chmod", "-R", "u+x", OBIX_DIR])
+
+    bashrc_cmd = '. "$HOME/.obix/env"'
+    with open(BASHRC, "r") as file:
+        bashrc = file.read()
+        if bashrc_cmd not in bashrc:
+            bashrc += f"\n{bashrc_cmd}\n\n"
+    with open(BASHRC, "w") as file:
+        file.write(bashrc)
+
+if __name__ == "__main__":
+    main()

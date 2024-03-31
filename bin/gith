@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -d "$HOME/.linux/bin" ]
+then
+    cmd=$1
+    for git_cmd in "$HOME/.linux/bin/git-*"
+    do
+       if [[ "git-$cmd" == "$git_cmd" ]]
+       then
+          shift 1
+          $git_cmd "$@"
+          exit $?
+       fi
+    done
+fi
+
+git "$@"
+exit $?
+

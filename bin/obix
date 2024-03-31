@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cmd="$1"
+if [ -z $cmd ] 
+then
+    echo "usage: $0 [install | update] args"
+fi
+
+shift 1
+
+if [[ $cmd == install ]]
+then
+    obix-install "$@"
+elif [[ $cmd == update ]]
+then 
+    obix-update "$@"
+fi

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source obix-mk
+
+obix-mk "$1" sh && vim + "$1"

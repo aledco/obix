@@ -1,0 +1,23 @@
+#!/bin/bash
+
+install-todo() {
+    git clone https://github.com/oberon-git/todo
+    cd todo
+    cargo build --release
+    cp target/release/todo "$HOME/.local/bin"
+    cd ../
+    rm -rf todo
+}
+
+cmd="$1"
+if [ -z $cmd ] 
+then
+    echo "usage: obix install <package>"
+fi
+
+if [[ $cmd == todo ]]
+then
+    install-todo
+else
+    echo "unrecongized package"
+fi

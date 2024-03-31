@@ -1,0 +1,14 @@
+#!/bin/bash 
+
+cmd="$1"
+if [ ! -z $cmd ] 
+then
+    obix-install "$@"
+fi
+
+cd ~
+git clone https://github.com/oberon-git/obix
+cd obix
+./install
+cd ../
+rm -rf obix

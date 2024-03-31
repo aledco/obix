@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source obix-mk
+
+obix-mk "$1" py && vim + "$1"

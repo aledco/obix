@@ -1,0 +1,23 @@
+#!/bin/bash
+
+obix-mk() {
+    script="$0"
+    file="$1"
+    ext="$2"
+
+    if [[ ! -d "$HOME/.obix/tpl/" || ! -f  "$HOME/.obix/tpl/tpl.$ext" ]]
+    then 
+        echo "template file does not exist"
+        return 1
+    fi
+
+    if [[ -z $file || -z $ext ]]
+    then
+        echo "usage: $script filename"
+        return 1
+    fi
+
+    content=$(cat "$HOME/.obix/tpl/tpl.$ext")
+    printf "${content}\n\n" > "$file"
+    chmod u+x "$file"
+}
