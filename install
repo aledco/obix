@@ -34,7 +34,7 @@ def main():
     setup_obix_dir()
 
 def shell(cmd):
-    sp.call(cmd, stdout=sp.DEVNULL) # stderr=obix.log
+    sp.call(cmd, stdout=sp.DEVNULL)
 
 def parse_args():
     parser = argparse.ArgumentParser(

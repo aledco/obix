@@ -8,11 +8,11 @@ fi
 
 install-obix() {
     cd ~
-    git clone https://github.com/oberon-git/obix
+    git clone https://github.com/oberon-git/obix > /dev/null 2>&1
     cd obix
     ./install
     cd ../
     rm -rf obix
 }
 
-install-obix > /dev/null 2>&1
+install-obix
