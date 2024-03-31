@@ -6,9 +6,13 @@ then
     obix-install "$@"
 fi
 
-cd ~
-git clone https://github.com/oberon-git/obix
-cd obix
-./install
-cd ../
-rm -rf obix
+install-obix() {
+    cd ~
+    git clone https://github.com/oberon-git/obix
+    cd obix
+    ./install
+    cd ../
+    rm -rf obix
+}
+
+install-obix > /dev/null 2>&1

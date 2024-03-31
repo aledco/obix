@@ -17,7 +17,7 @@ fi
 
 if [[ $cmd == todo ]]
 then
-    install-todo
+    install-todo > /dev/null 2>&1
 else
     echo "unrecongized package"
 fi
